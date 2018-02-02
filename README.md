@@ -1,5 +1,5 @@
 # Promise4K
-A promise implementation for Kotlin/JVM. The Api is exactly the same as Promise in JavaScipt.
+A promise implementation for Kotlin/JVM. The Api is exactly the same as Promise in JavaScript.
 
 ## Syntax
 To learn about promises, read [Using promises]([Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)) first.

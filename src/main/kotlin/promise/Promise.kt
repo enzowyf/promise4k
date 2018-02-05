@@ -13,7 +13,12 @@ class Promise {
   private constructor()
 
   constructor(executor: (resolve: (Any) -> Unit, reject: (Any) -> Unit) -> Unit) {
-    executor(this::doResolve, this::doReject)
+    try {
+      executor(this::doResolve, this::doReject)
+    } catch (t : Throwable) {
+      doReject(t)
+    }
+
   }
 
   private fun updateStatus(newStatus: Status): Collection<QueueItem>? {
@@ -45,7 +50,7 @@ class Promise {
     }
   }
 
-  fun then(onFulfilled: (value: Any) -> Any): Promise = then(onFulfilled) { it }
+  fun then(onFulfilled: (value: Any) -> Any = { it }): Promise = then(onFulfilled) { it }
 
   fun then(onFulfilled: (value: Any) -> Any,
            onRejected: (reason: Any) -> Any): Promise {
@@ -82,7 +87,7 @@ class Promise {
 
   }
 
-  fun catch(onRejected: (reason: Any) -> Any): Promise = then({ it }, onRejected)
+  fun catch(onRejected: (reason: Any) -> Any = { it }): Promise = then({ it }, onRejected)
 
   companion object {
     fun all(iterable: Iterable<Promise>): Promise = Promise { resolve, reject ->

@@ -1,6 +1,20 @@
 # Promise4K
+[![](https://jitpack.io/v/enzowyf/Promise4K.svg)](https://jitpack.io/#enzowyf/Promise4K)
 A promise implementation for Kotlin/JVM. The Api is exactly the same as Promise in JavaScript.
 
+## Gradle
+
+    allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}
+    }
+    
+    dependencies {
+	compile 'com.github.enzowyf:Promise4K:v1.0'
+    }
+    
 ## Syntax
 To learn about promises, read [Using promises]([Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)) first.
 

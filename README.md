@@ -6,14 +6,14 @@ A promise implementation for Kotlin/JVM. The Api is exactly the same as Promise 
 ## Gradle
 
     allprojects {
-	repositories {
-		...
-		maven { url 'https://jitpack.io' }
-	}
+	    repositories {
+		    ...
+		    maven { url 'https://jitpack.io' }
+	    }
     }
     
     dependencies {
-	compile 'com.github.enzowyf:Promise4K:v1.0'
+	    compile 'com.github.enzowyf:Promise4K:v1.0'
     }
     
 ## Syntax

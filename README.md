@@ -1,5 +1,5 @@
-# Promise4K
-[![](https://jitpack.io/v/enzowyf/Promise4K.svg)](https://jitpack.io/#enzowyf/Promise4K)
+# promise4k
+[![](https://jitpack.io/v/enzowyf/promise4k.svg)](https://jitpack.io/#enzowyf/promise4k)
 
 A promise implementation for Kotlin/JVM. The Api is exactly the same as Promise in JavaScript.
 
@@ -13,7 +13,7 @@ A promise implementation for Kotlin/JVM. The Api is exactly the same as Promise 
     }
     
     dependencies {
-	    compile 'com.github.enzowyf:Promise4K:v1.0'
+	    compile 'com.github.enzowyf:promise4k:1.0.0'
     }
     
 ## Syntax

@@ -4,7 +4,7 @@
 A promise implementation for Kotlin/JVM. The Api is exactly the same as Promise in JavaScript.
 
 ## Gradle
-```gradle
+```groovy
 allprojects {
     repositories {
         ...

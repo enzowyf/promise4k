@@ -13,8 +13,8 @@ A promise implementation for Kotlin/JVM. The Api is exactly the same as Promise 
 ```gradle
 allprojects {
     repositories {
-	    ...
-	    maven { url 'https://jitpack.io' }
+        ...
+        maven { url 'https://jitpack.io' }
     }
 }
     
@@ -29,62 +29,62 @@ To learn about promises, read [Using promises](https://developer.mozilla.org/en-
 ### Constructor
 ```kotlin
 val promise = Promise { resolve, reject ->
-	setTimeout({
-    		resolve("foo")
-  	}, 1000)
+    setTimeout({
+        resolve("foo")
+    }, 1000)
 }
 ```
 
 ### resolve
 ```kotlin
 Promise.resolve("foo").then { value ->
-	println("Get some data:$value")
+    println("Get some data:$value")
 }
 ```
 ### reject
 ```kotlin
 Promise.reject("foo").catch { reason ->
-	println("Something wrong:$reason")
+    println("Something wrong:$reason")
 }
 ```
 ### then
 ```kotlin
 Promise.resolve("foo").then { value ->
-	println("Get some data:$value")
+    println("Get some data:$value")
 }
 ```
 or
 
 ```kotlin	
 Promise.resolve("foo")
-	.then({ value ->
-		println("Get some data:$value")
-	}, { reason ->
-      		println("Something wrong:$reason")
-	})
+    .then({ value ->
+        println("Get some data:$value")
+    }, { reason ->
+        println("Something wrong:$reason")
+    })
 ```
 
 ### catch
 ```kotlin
 Promise.resolve("foo")
-	.then { value ->
-		println("Get some data:$value")
-  	}.catch { reason ->
-		println("Something wrong:$reason")
-	}	
+    .then { value ->
+        println("Get some data:$value")
+    }.catch { reason ->
+        println("Something wrong:$reason")
+    }	
 ```
 
 ### all
 ```kotlin
 Promise.all(listOf(promise1, promise2, promise3)).then {
-	println("All finish:$it")
+    println("All finish:$it")
 }
 ```
 
 ### race
 ```kotlin
 Promise.race(listOf(promise1, promise2, promise3)).then {
-	println("Race winner:$it")
+    println("Race winner:$it")
 }
 ```
 ### Chaining
@@ -93,21 +93,21 @@ val p1 = Promise.resolve("foo")
 val p2 = Promise.resolve("bar")
 
 p1.then {
-	println(it)
-	p2
+    println(it)
+    p2
 }.then {
-	println(it)
-	"Hello"
+    println(it)
+    "Hello"
 }.then {
-	println(it)
-	Promise.reject("Oh, no!")
+    println(it)
+    Promise.reject("Oh, no!")
 }.catch {
-	println(it)
-	"Claim down"
+    println(it)
+    "Claim down"
 }.then {
-	println(it)
-	throw Exception("Oh, my God!!!")
+    println(it)
+    throw Exception("Oh, my God!!!")
 }.catch {
-	println((it as? Exception)?.message)
+    println((it as? Exception)?.message)
 }
 ```

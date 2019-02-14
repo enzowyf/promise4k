@@ -1,9 +1,3 @@
----
-layout: post
-title:  "Promise4k"
-date:   2019-01-30 16:43:42 +0800
-categories: enzo
----
 # [promise4k](https://github.com/enzowyf/promise4k)
 [![](https://jitpack.io/v/enzowyf/promise4k.svg)](https://jitpack.io/#enzowyf/promise4k)
 

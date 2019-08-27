@@ -1,5 +1,6 @@
 package promise
 
+import org.junit.Assert
 import org.junit.Test
 import java.util.concurrent.CountDownLatch
 import kotlin.concurrent.thread
@@ -17,7 +18,10 @@ class PromiseTest {
             }
 
             promise.then { value ->
+                Assert.assertEquals("foo", value)
                 println("Get some data:$value")
+            }.catch {
+                println("Something wrong:$it")
             }
         }
     }
@@ -34,8 +38,9 @@ class PromiseTest {
 
             promise1.then({ value ->
                 println("Get some data:$value")
+                Assert.assertEquals("foo", value)
             }, { reason ->
-                println("Something wrong:$reason")
+                println("promise1 go wrong:$reason")
             })
 
             val promise2 = Promise { resolve, reject ->
@@ -49,7 +54,8 @@ class PromiseTest {
             promise2.then({ value ->
                 println("Get some data:$value")
             }, { reason ->
-                println("Something wrong:$reason")
+                println("promise2 go  wrong:$reason")
+                Assert.assertEquals("bar", reason)
             })
         }
     }
@@ -68,14 +74,16 @@ class PromiseTest {
             promise.then { value ->
                 println("Get some data:$value")
             }.catch { reason ->
-                    println("Something wrong:$reason")
-                }
+                Assert.assertEquals("bar", reason)
+                println("Something wrong:$reason")
+            }
         }
     }
 
     @Test
     fun resolve() {
         Promise.resolve("foo").then { value ->
+            Assert.assertEquals("foo", value)
             println("Get some data:$value")
         }
     }
@@ -83,6 +91,7 @@ class PromiseTest {
     @Test
     fun reject() {
         Promise.reject("foo").catch { reason ->
+            Assert.assertEquals("foo", reason)
             println("Something wrong:$reason")
         }
     }
@@ -116,16 +125,18 @@ class PromiseTest {
             }
 
             Promise.all(listOf(promise1, promise2, promise3)).then {
-                println("All finish:$it")
+                Assert.assertArrayEquals(arrayOf("foo", "bar", "123"), it as Array<*>)
+                println("All finish in test1:$it")
             }.catch {
-                    println("Something wrong:$it")
-                }
+                println("Something wrong in test1:$it")
+            }
 
             Promise.all(listOf(promise1, promise2, promise4)).then {
-                println("All finish:$it")
+                println("All finish in test2:$it")
             }.catch {
-                    println("Something wrong:$it")
-                }
+                Assert.assertEquals("456", it)
+                println("Something wrong in test2:$it")
+            }
         }
     }
 
@@ -158,16 +169,18 @@ class PromiseTest {
             }
 
             Promise.race(listOf(promise1, promise2, promise3)).then {
-                println("Race winner:$it")
+                Assert.assertEquals("foo", it)
+                println("Race winner in test1:$it")
             }.catch {
-                    println("Something wrong:$it")
-                }
+                println("Something wrong in test1:$it")
+            }
 
             Promise.race(listOf(promise1, promise2, promise4)).then {
-                println("Race winner:$it")
+                println("Race winner in test2:$it")
             }.catch {
-                    println("Something wrong:$it")
-                }
+                Assert.assertEquals("456", it)
+                println("Something wrong in test2:$it")
+            }
         }
     }
 
@@ -177,23 +190,29 @@ class PromiseTest {
         val p2 = Promise.resolve("bar")
 
         p1.then {
+            Assert.assertEquals("foo", it)
             println(it)
             p2
         }.then {
-                println(it)
-                "Hello"
-            }.then {
-                println(it)
-                Promise.reject("Oh, no!")
-            }.catch {
-                println(it)
-                "Claim down"
-            }.then {
-                println(it)
-                throw Exception("Oh, my God!!!")
-            }.catch {
-                println((it as? Exception)?.message)
-            }
+            Assert.assertEquals("bar", it)
+            println(it)
+            "Hello"
+        }.then {
+            Assert.assertEquals("Hello", it)
+            println(it)
+            Promise.reject("Oh, no!")
+        }.catch {
+            Assert.assertEquals("Oh, no!", it)
+            println(it)
+            "Claim down"
+        }.then {
+            Assert.assertEquals("Claim down", it)
+            println(it)
+            throw Exception("Oh, my God!!!")
+        }.catch {
+            Assert.assertEquals("Oh, my God!!!", it)
+            println((it as? Exception)?.message)
+        }
     }
 
     @Test
@@ -219,14 +238,17 @@ class PromiseTest {
             }
 
             promise1.then {
+                Assert.assertEquals("foo", it)
                 println(it)
                 promise2
             }.then {
-                    println(it)
-                    promise3
-                }.catch {
-                    println(it)
-                }
+                Assert.assertEquals("bar", it)
+                println(it)
+                promise3
+            }.catch {
+                Assert.assertEquals("123", it)
+                println(it)
+            }
         }
     }
 
